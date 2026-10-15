@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تَوان | Tavaan — داشبورد مستندات</title>
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#111a33; --card:#151f3d; --card2:#1b284d;
+    --line:#26325c; --txt:#e6ecff; --mut:#93a0c8; --acc:#4f8cff;
+    --acc2:#22d3ee; --ok:#34d399; --warn:#fbbf24; --danger:#f87171;
+    --p0:#f87171; --p1:#fbbf24; --p2:#34d399;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Vazirmatn","Segoe UI",Tahoma,system-ui,sans-serif;
+    background:linear-gradient(160deg,var(--bg),var(--bg2));
+    color:var(--txt); line-height:1.7; padding:0 0 60px; min-height:100vh;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* Header */
+  header{padding:48px 0 30px;text-align:center;position:relative;overflow:hidden}
+  header::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(600px 200px at 50% -20%,rgba(79,140,255,.28),transparent);}
+  .logo{display:inline-flex;align-items:center;gap:14px;position:relative}
+  .logo svg{filter:drop-shadow(0 4px 20px rgba(34,211,238,.5))}
+  h1{font-size:2.5rem;font-weight:800;letter-spacing:-.5px;
+     background:linear-gradient(90deg,#fff,#9dc0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{color:var(--mut);margin-top:8px;font-size:1.02rem}
+  .badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative}
+  .badge{background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 16px;font-size:.82rem;color:var(--mut);display:inline-flex;align-items:center;gap:6px}
+  .badge b{color:var(--txt)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:34px 0}
+  .stat{background:linear-gradient(150deg,var(--card),var(--card2));border:1px solid var(--line);
+    border-radius:16px;padding:20px;text-align:center;transition:.25s}
+  .stat:hover{transform:translateY(-4px);border-color:var(--acc)}
+  .stat .n{font-size:2.1rem;font-weight:800;color:var(--acc2)}
+  .stat .l{color:var(--mut);font-size:.85rem;margin-top:4px}
+
+  /* Sections */
+  section{margin-top:38px}
+  .sec-h{display:flex;align-items:center;gap:12px;margin-bottom:18px;
+    padding-bottom:12px;border-bottom:1px solid var(--line)}
+  .sec-h .ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+    background:var(--card2);border:1px solid var(--line);flex-shrink:0}
+  .sec-h h2{font-size:1.35rem;font-weight:700}
+  .sec-h .sub{color:var(--mut);font-size:.85rem;font-weight:400}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+    transition:.2s;position:relative;display:block}
+  .card:hover{background:var(--card2);border-color:var(--acc);transform:translateY(-2px)}
+  .card .id{font-size:.72rem;color:var(--acc2);font-weight:700;letter-spacing:.5px;
+    font-family:monospace;direction:ltr;display:inline-block}
+  .card .ti{font-weight:600;margin:5px 0 4px;font-size:.98rem}
+  .card .de{color:var(--mut);font-size:.8rem;line-height:1.5}
+
+  /* engines grid compact */
+  .eng{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+  .eng .card{padding:12px 14px}
+  .pill{position:absolute;top:12px;left:12px;font-size:.62rem;font-weight:700;
+    padding:2px 8px;border-radius:999px;font-family:monospace}
+  .P0{background:rgba(248,113,113,.16);color:var(--p0);border:1px solid rgba(248,113,113,.35)}
+  .P1{background:rgba(251,191,36,.14);color:var(--p1);border:1px solid rgba(251,191,36,.32)}
+  .P2{background:rgba(52,211,153,.14);color:var(--p2);border:1px solid rgba(52,211,153,.32)}
+
+  /* roadmap */
+  .road{display:flex;flex-direction:column;gap:0}
+  .phase{display:flex;gap:16px;align-items:flex-start;padding:14px 0;position:relative}
+  .phase:not(:last-child)::after{content:"";position:absolute;right:19px;top:52px;bottom:-2px;width:2px;background:var(--line)}
+  .ph-n{width:40px;height:40px;border-radius:11px;background:var(--card2);border:1px solid var(--line);
+    display:grid;place-items:center;font-weight:800;color:var(--acc);flex-shrink:0;z-index:1}
+  .ph-b{flex:1}
+  .ph-b h3{font-size:1.02rem}
+  .ph-b p{color:var(--mut);font-size:.85rem;margin-top:2px}
+  .ph-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .tg{font-size:.7rem;background:var(--bg2);border:1px solid var(--line);padding:2px 9px;border-radius:7px;color:var(--mut);font-family:monospace;direction:ltr}
+
+  /* apps */
+  .app-card{display:flex;align-items:center;gap:14px}
+  .app-ico{font-size:1.7rem;flex-shrink:0;width:46px;height:46px;display:grid;place-items:center;
+    background:var(--bg2);border:1px solid var(--line);border-radius:12px}
+
+  .note{background:rgba(79,140,255,.08);border:1px solid rgba(79,140,255,.3);
+    border-radius:12px;padding:16px 18px;color:var(--mut);font-size:.88rem;margin-top:14px}
+  .note b{color:var(--txt)}
+  footer{text-align:center;color:var(--mut);font-size:.82rem;margin-top:50px;padding-top:24px;border-top:1px solid var(--line)}
+  .kbd{font-family:monospace;background:var(--bg2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.78rem;direction:ltr;display:inline-block;color:var(--acc2)}
+  @media(max-width:640px){h1{font-size:1.8rem}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">
+      <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#4f8cff"/>
+        </linearGradient></defs>
+        <rect x="4" y="4" width="56" height="56" rx="16" stroke="url(#g)" stroke-width="2.5" fill="rgba(79,140,255,.07)"/>
+        <path d="M32 15 L46 23 L46 41 L32 49 L18 41 L18 23 Z" stroke="url(#g)" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        <circle cx="32" cy="32" r="5" fill="url(#g)"/>
+        <path d="M32 15 L32 27 M46 23 L36 29 M46 41 L36 35 M32 49 L32 37 M18 41 L28 35 M18 23 L28 29" stroke="url(#g)" stroke-width="1.3" opacity=".6"/>
+      </svg>
+      <div style="text-align:right">
+        <h1>تَوان <span style="font-size:1.4rem;color:var(--mut);font-weight:400">| Tavaan</span></h1>
+        <div class="tag">فریمورک صفر‌وابستگی PHP 8.2+ — مستندات تحلیلی جزء‌به‌جزء</div>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge"><span class="dot"></span> <b>Zero Dependency</b></span>
+      <span class="badge">HMVC + Modular + ED + Hexagonal</span>
+      <span class="badge">PHP <b>8.2 / 8.3 / 8.4</b></span>
+      <span class="badge"><b>53</b> موتور خودنوشته</span>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="n">121</div><div class="l">سند Markdown</div></div>
+    <div class="stat"><div class="n">53</div><div class="l">موتور (Engine)</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">کاربرد (Kit)</div></div>
+    <div class="stat"><div class="n">16</div><div class="l">تصمیم معماری (ADR)</div></div>
+    <div class="stat"><div class="n">~141K</div><div class="l">کلمه مستند</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">فاز ساخت (M0–M9)</div></div>
+  </div>
+
+  <div class="note">
+    🧭 <b>مسیر مطالعه برای ایجنت‌های هوش مصنوعی:</b>
+    <span class="kbd">goals-vision</span> → <span class="kbd">php82-strict</span> →
+    <span class="kbd">request-lifecycle</span> → <span class="kbd">folder-structure</span> →
+    <span class="kbd">engines/README</span> → <span class="kbd">agent-backlog</span> →
+    <span class="kbd">definition-of-done</span>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">🎯</div>
+      <div><h2>۰۰ — نمای کلی و اهداف</h2><div class="sub">چشم‌انداز، اصول بنیادین، الزامات</div></div>
+    </div>
+    <div class="grid">
+      <a class="card" href="docs/00-overview/goals-vision.md"><span class="id">DOC-001</span><div class="ti">اهداف کلان و چشم‌انداز</div><div class="de">۷ هدف کلان (امنیت/سرعت/دقت/خودکفایی/DX/انعطاف/مقیاس) + KPI</div></a>
+      <a class="card" href="docs/00-overview/principles.md"><span class="id">DOC-002</span><div class="ti">اصول بنیادین ۱۲گانه</div><div class="de">P1 صفر‌وابستگی … P12 توسعه‌پذیری سه‌گانه + ترتیب حل تعارض</div></a>
+      <a class="card" href="docs/00-overview/requirements.md"><span class="id">DOC-003</span><div class="ti">الزامات (FR/NFR/CON)</div><div class="de">بیش از ۱۵۰ الزام شماره‌دار با ماتریس ردیابی</div></a>
+      <a class="card" href="docs/00-overview/quickstart.md" style="border-color:var(--ok)"><span class="id">DOC-004 🚀</span><div class="ti">راهنمای شروع سریع</div><div class="de">نقشهٔ عملی «از صفر تا اولین ماژول» + ده فرمان + MVP Kernel</div></a>
+    </div>
+  </section>
+
+  <!-- STANDARDS -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">📏</div>
+      <div><h2>۰۱ — استانداردها و قواعد</h2><div class="sub">قواعد اجباری کدنویسی، امنیت، مستندسازی</div></div>
+    </div>
+    <div class="grid">
+      <a class="card" href="docs/01-standards/php82-strict.md"><span class="id">DOC-010 🔒</span><div class="ti">قواعد PHP 8.2+ و Deprecated</div><div class="de">۳۰ مورد ممنوعه + قابلیت‌های اجباری + lint خودکار</div></a>
+      <a class="card" href="docs/01-standards/coding-style.md"><span class="id">DOC-011 🔒</span><div class="ti">سبک کد</div><div class="de">PSR-12 + افزودنی‌های تَوان + PHP-CS-Fixer ruleset</div></a>
+      <a class="card" href="docs/01-standards/naming-conventions.md"><span class="id">DOC-012 🔒</span><div class="ti">قواعد نام‌گذاری</div><div class="de">namespace/کلاس/جدول/روت/کلید config + نام‌های رزروشده</div></a>
+      <a class="card" href="docs/01-standards/error-handling.md"><span class="id">DOC-013 🔒</span><div class="ti">مدیریت خطا</div><div class="de">سلسله‌مراتب استثنا، کد خطا، RefCode، RFC 9457</div></a>
+      <a class="card" href="docs/01-standards/contracts-interfaces.md"><span class="id">DOC-014 🔒</span><div class="ti">کاتالوگ قراردادها</div><div class="de">همهٔ Interfaceهای هسته با امضای کامل</div></a>
+      <a class="card" href="docs/01-standards/documentation-standard.md"><span class="id">DOC-015</span><div class="ti">استاندارد مستندسازی</div><div class="de">قالب اجباری اسناد + بلوک machine-readable</div></a>
+      <a class="card" href="docs/01-standards/security-policy.md"><span class="id">DOC-016 🔒</span><div class="ti">سیاست امنیتی</div><div class="de">OWASP Top 10 → کنترل‌ها + مدل تهدید + تست امنیتی</div></a>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">🏛️</div>
+      <div><h2>۰۲ — معماری</h2><div class="sub">ترکیب ۵ الگوی معماری + چرخهٔ اجرا</div></div>
+    </div>
+    <div class="grid">
+      <a class="card" href="docs/02-architecture/overview.md"><span class="id">DOC-020</span><div class="ti">نمای کلان (C4)</div><div class="de">ترکیب معماری‌ها، ۵ Entry Point، نمودار C4</div></a>
+      <a class="card" href="docs/02-architecture/layered-hmvc.md"><span class="id">DOC-021 🔒</span><div class="ti">لایه‌ای + HMVC</div><div class="de">۶ لایه، Widget، Module::run، قوانین ArchUnit</div></a>
+      <a class="card" href="docs/02-architecture/modular-monolith.md"><span class="id">DOC-022 🔒</span><div class="ti">ماژولار مونولیت</div><div class="de">manifest، مرز ماژول، Topological Sort، Kit</div></a>
+      <a class="card" href="docs/02-architecture/event-driven.md"><span class="id">DOC-023 🔒</span><div class="ti">رویداد‌محور (ED)</div><div class="de">Outbox، CQRS، Event Sourcing، DLQ، Idempotency</div></a>
+      <a class="card" href="docs/02-architecture/microservice-ready.md"><span class="id">DOC-024</span><div class="ti">آمادگی مایکروسرویس</div><div class="de">Saga، Contract Test، استخراج سرویس، Gateway</div></a>
+      <a class="card" href="docs/02-architecture/request-lifecycle.md"><span class="id">DOC-025 🔒</span><div class="ti">چرخهٔ عمر درخواست</div><div class="de">۱۴ فاز از بوت تا terminate + Resident mode</div></a>
+      <a class="card" href="docs/02-architecture/container-di.md"><span class="id">DOC-026 🔒</span><div class="ti">کانتینر و DI</div><div class="de">Auto-Wiring، Contextual، Lazy Proxy، Facade</div></a>
+      <a class="card" href="docs/02-architecture/bootstrapping.md"><span class="id">DOC-027 🔒</span><div class="ti">بوت و Autoloader</div><div class="de">Autoloader خودنوشته، ENV، Optimizer، Preload</div></a>
+      <a class="card" href="docs/02-architecture/multi-tenancy.md"><span class="id">DOC-028</span><div class="ti">چنداجاره‌ای</div><div class="de">۳ استراتژی، Tenant Context، Quota، Isolation</div></a>
+    </div>
+  </section>
+
+  <!-- ENGINES -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">⚙️</div>
+      <div><h2>۰۳ — موتورها (۵۳ کتابخانهٔ خودنوشته)</h2><div class="sub">هر موتور: هدف، معماری، API، الگوریتم، امنیت، کارایی، معیار پذیرش</div></div>
+    </div>
+    <a class="card" href="docs/03-engines/README.md" style="margin-bottom:14px;border-color:var(--acc)">
+      <span class="id">DOC-030 🔒 🧠</span><div class="ti">📇 رجیستری موتورها — نقطهٔ شروع</div>
+      <div class="de">فهرست کامل ۵۳ موتور، گراف وابستگی، ترتیب ساخت ۸ فازی، ماتریس افزونه‌های PHP و Fallback، بلوک machine-readable</div>
+    </a>
+
+    <h3 style="margin:18px 0 10px;color:var(--mut);font-size:.9rem">▸ هسته (Kernel) — P0</h3>
+    <div class="eng">
+      <a class="card" href="docs/03-engines/container.md"><span class="pill P0">P0</span><div class="ti">Container</div><div class="de">DI + Auto-Wiring</div></a>
+      <a class="card" href="docs/03-engines/config.md"><span class="pill P0">P0</span><div class="ti">Config</div><div class="de">پیکربندی + ENV</div></a>
+      <a class="card" href="docs/03-engines/event.md"><span class="pill P0">P0</span><div class="ti">Event</div><div class="de">رویداد + Outbox</div></a>
+      <a class="card" href="docs/03-engines/pipeline.md"><span class="pill P0">P0</span><div class="ti">Pipeline</div><div class="de">خط لوله</div></a>
+      <a class="card" href="docs/03-engines/error.md"><span class="pill P0">P0</span><div class="ti">Error</div><div class="de">مدیریت خطا</div></a>
+      <a class="card" href="docs/03-engines/log.md"><span class="pill P0">P0</span><div class="ti">Log</div><div class="de">لاگ ساختاریافته</div></a>
+      <a class="card" href="docs/03-engines/compat.md"><span class="pill P0">P0</span><div class="ti">Compat</div><div class="de">Polyfill</div></a>
+      <a class="card" href="docs/03-engines/optimizer.md"><span class="pill P1">P1</span><div class="ti">Optimizer</div><div class="de">کش‌سازی</div></a>
+      <a class="card" href="docs/03-engines/module.md"><span class="pill P0">P0</span><div class="ti">Module</div><div class="de">کشف ماژول</div></a>
+    </div>
+
+    <h3 style="margin:18px 0 10px;color:var(--mut);font-size:.9rem">▸ وب (Web)</h3>
+    <div class="eng">
+      <a class="card" href="docs/03-engines/http.md"><span class="pill P0">P0</span><div class="ti">HTTP</div><div class="de">Request/Response/Kernel</div></a>
+      <a class="card" href="docs/03-engines/router.md"><span class="pill P0">P0</span><div class="ti">Router</div><div class="de">Compiled Trie</div></a>
+      <a class="card" href="docs/03-engines/session.md"><span class="pill P0">P0</span><div class="ti">Session</div><div class="de">۵ درایور</div></a>
+      <a class="card" href="docs/03-engines/cookie.md"><span class="pill P0">P0</span><div class="ti">Cookie</div><div class="de">رمزنگاری‌شده</div></a>
+      <a class="card" href="docs/03-engines/view.md"><span class="pill P0">P0</span><div class="ti">View</div><div class="de">.tv.php کامپایلر</div></a>
+      <a class="card" href="docs/03-engines/api.md"><span class="pill P1">P1</span><div class="ti">API</div><div class="de">Resource/OpenAPI</div></a>
+      <a class="card" href="docs/03-engines/realtime.md"><span class="pill P2">P2</span><div class="ti">Realtime</div><div class="de">SSE + WebSocket</div></a>
+      <a class="card" href="docs/03-engines/cors.md"><span class="pill P0">P0</span><div class="ti">CORS</div><div class="de">Cross-Origin</div></a>
+    </div>
+
+    <h3 style="margin:18px 0 10px;color:var(--mut);font-size:.9rem">▸ داده (Data)</h3>
+    <div class="eng">
+      <a class="card" href="docs/03-engines/database.md"><span class="pill P0">P0</span><div class="ti">Database</div><div class="de">QueryBuilder + Grammar</div></a>
+      <a class="card" href="docs/03-engines/schema.md"><span class="pill P0">P0</span><div class="ti">Schema</div><div class="de">Blueprint + DDL</div></a>
+      <a class="card" href="docs/03-engines/migration.md"><span class="pill P0">P0</span><div class="ti">Migration</div><div class="de">مهاجرت + Lock</div></a>
+      <a class="card" href="docs/03-engines/orm.md"><span class="pill P0">P0</span><div class="ti">ORM</div><div class="de">ActiveRecord + Repo</div></a>
+      <a class="card" href="docs/03-engines/validation.md"><span class="pill P0">P0</span><div class="ti">Validation</div><div class="de">۸۵ قاعده + ایرانی</div></a>
+      <a class="card" href="docs/03-engines/search.md"><span class="pill P1">P1</span><div class="ti">Search</div><div class="de">فارسی + Facet</div></a>
+      <a class="card" href="docs/03-engines/pagination.md"><span class="pill P0">P0</span><div class="ti">Pagination</div><div class="de">Page/Cursor/Keyset</div></a>
+    </div>
+
+    <h3 style="margin:18px 0 10px;color:var(--mut);font-size:.9rem">▸ امنیت و هویت (Security)</h3>
+    <div class="eng">
+      <a class="card" href="docs/03-engines/crypt.md"><span class="pill P0">P0</span><div class="ti">Crypt</div><div class="de">AES-GCM + HKDF</div></a>
+      <a class="card" href="docs/03-engines/hash.md"><span class="pill P0">P0</span><div class="ti">Hash</div><div class="de">Argon2id</div></a>
+      <a class="card" href="docs/03-engines/auth.md"><span class="pill P0">P0</span><div class="ti">Auth</div><div class="de">JWT/OTP/2FA</div></a>
+      <a class="card" href="docs/03-engines/rbac.md"><span class="pill P0">P0</span><div class="ti">RBAC</div><div class="de">Gate/Policy</div></a>
+      <a class="card" href="docs/03-engines/security.md"><span class="pill P0">P0</span><div class="ti">Security</div><div class="de">CSRF/RateLimit/SSRF</div></a>
+      <a class="card" href="docs/03-engines/audit.md"><span class="pill P1">P1</span><div class="ti">Audit</div><div class="de">زنجیرهٔ هش</div></a>
+    </div>
+
+    <h3 style="margin:18px 0 10px;color:var(--mut);font-size:.9rem">▸ زیرساخت (Infrastructure)</h3>
+    <div class="eng">
+      <a class="card" href="docs/03-engines/cache.md"><span class="pill P0">P0</span><div class="ti">Cache</div><div class="de">۶ درایور + Tag/Lock</div></a>
+      <a class="card" href="docs/03-engines/queue.md"><span class="pill P1">P1</span><div class="ti">Queue</div><div class="de">صف + Worker</div></a>
+      <a class="card" href="docs/03-engines/schedule.md"><span class="pill P1">P1</span><div class="ti">Schedule</div><div class="de">Cron خودنوشته</div></a>
+      <a class="card" href="docs/03-engines/console.md"><span class="pill P1">P1</span><div class="ti">Console</div><div class="de">CLI + tvn</div></a>
+      <a class="card" href="docs/03-engines/filesystem.md"><span class="pill P1">P1</span><div class="ti">Filesystem</div><div class="de">Local/S3/FTP</div></a>
+      <a class="card" href="docs/03-engines/http-client.md"><span class="pill P1">P1</span><div class="ti">HttpClient</div><div class="de">Retry + SSRF</div></a>
+      <a class="card" href="docs/03-engines/mail.md"><span class="pill P1">P1</span><div class="ti">Mail</div><div class="de">SMTP خودنوشته</div></a>
+      <a class="card" href="docs/03-engines/notification.md"><span class="pill P1">P1</span><div class="ti">Notification</div><div class="de">چندکاناله</div></a>
+      <a class="card" href="docs/03-engines/observability.md"><span class="pill P1">P1</span><div class="ti">Observability</div><div class="de">Metrics/Trace</div></a>
+      <a class="card" href="docs/03-engines/backup.md"><span class="pill P2">P2</span><div class="ti">Backup</div><div class="de">رمزنگاری‌شده</div></a>
+    </div>
+
+    <h3 style="margin:18px 0 10px;color:var(--mut);font-size:.9rem">▸ بومی‌سازی (Localization)</h3>
+    <div class="eng">
+      <a class="card" href="docs/03-engines/i18n.md"><span class="pill P0">P0</span><div class="ti">I18n</div><div class="de">ترجمه + Plural</div></a>
+      <a class="card" href="docs/03-engines/jalali.md"><span class="pill P0">P0</span><div class="ti">Jalali</div><div class="de">تقویم جلالی/قمری</div></a>
+    </div>
+
+    <h3 style="margin:18px 0 10px;color:var(--mut);font-size:.9rem">▸ دامنه (Domain)</h3>
+    <div class="eng">
+      <a class="card" href="docs/03-engines/workflow.md"><span class="pill P2">P2</span><div class="ti">Workflow</div><div class="de">BPM + Saga</div></a>
+      <a class="card" href="docs/03-engines/report.md"><span class="pill P2">P2</span><div class="ti">Report</div><div class="de">xlsx خودنوشته</div></a>
+      <a class="card" href="docs/03-engines/payment.md"><span class="pill P2">P2</span><div class="ti">Payment</div><div class="de">درگاه‌های ایرانی</div></a>
+      <a class="card" href="docs/03-engines/media.md"><span class="pill P1">P1</span><div class="ti">Media</div><div class="de">آپلود + تصویر</div></a>
+      <a class="card" href="docs/03-engines/feature-flag.md"><span class="pill P2">P2</span><div class="ti">FeatureFlag</div><div class="de">Targeting</div></a>
+      <a class="card" href="docs/03-engines/tenancy.md"><span class="pill P1">P1</span><div class="ti">Tenancy</div><div class="de">چنداجاره‌ای</div></a>
+    </div>
+
+    <h3 style="margin:18px 0 10px;color:var(--mut);font-size:.9rem">▸ ابزار (Tooling)</h3>
+    <div class="eng">
+      <a class="card" href="docs/03-engines/scaffold.md"><span class="pill P1">P1</span><div class="ti">Scaffold</div><div class="de">make:* Generator</div></a>
+      <a class="card" href="docs/03-engines/admin.md"><span class="pill P2">P2</span><div class="ti">Admin</div><div class="de">CRUD Generator</div></a>
+      <a class="card" href="docs/03-engines/plugin.md"><span class="pill P1">P1</span><div class="ti">Plugin</div><div class="de">Sandbox + امضا</div></a>
+      <a class="card" href="docs/03-engines/test.md"><span class="pill P0">P0</span><div class="ti">Test</div><div class="de">Test Framework</div></a>
+      <a class="card" href="docs/03-engines/upgrade.md"><span class="pill P2">P2</span><div class="ti">Upgrade</div><div class="de">ارتقای نسخه</div></a>
+    </div>
+  </section>
+
+  <!-- STRUCTURE -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">📁</div>
+      <div><h2>۰۴ — ساختار پوشه و فایل</h2><div class="sub">کجا چه چیزی بنویسیم</div></div>
+    </div>
+    <div class="grid">
+      <a class="card" href="docs/04-structure/folder-structure.md"><span class="id">DOC-080 🔒</span><div class="ti">ساختار کامل پوشه/فایل</div><div class="de">نمای کامل نصب + مسئولیت هر پوشه + tavaan.json + Decision Tree</div></a>
+      <a class="card" href="docs/04-structure/file-conventions.md"><span class="id">DOC-081 🔒</span><div class="ti">قرارداد محتوای فایل‌ها</div><div class="de">الگوی کلاس/اینترفیس/Enum/Config/Route/View/Migration/Test</div></a>
+      <a class="card" href="docs/04-structure/composer-mapping.md"><span class="id">DOC-082 🔒</span><div class="ti">نگاشت Autoloader ↔ Composer</div><div class="de">جدول نگاشت namespace + انتشار پکیج + IDE meta</div></a>
+      <a class="card" href="docs/04-structure/cli-reference.md" style="border-color:var(--acc)"><span class="id">DOC-083 🔧</span><div class="ti">مرجع کامل CLI</div><div class="de">۱۰۵ دستور <span class="kbd">tvn</span> در ۱۶ دسته + cron/systemd</div></a>
+      <a class="card" href="docs/04-structure/config-reference.md" style="border-color:var(--acc)"><span class="id">DOC-085 ⚙️</span><div class="ti">مرجع پیکربندی</div><div class="de">۴۸ فایل config + ۱۱۱ کلید ENV + .env.example کامل</div></a>
+      <a class="card" href="docs/04-structure/database-schema-catalog.md" style="border-color:var(--acc)"><span class="id">DOC-086 🗄️</span><div class="ti">کاتالوگ طرح پایگاه داده</div><div class="de">دیکشنری دادهٔ جداول هسته (<span class="kbd">tvn_*</span>) + DDL + گراف FK</div></a>
+    </div>
+  </section>
+
+  <!-- APPLICATIONS -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">🚀</div>
+      <div><h2>۰۵ — کاربردها (Kits)</h2><div class="sub">از وبلاگ تا ERP/BPMS</div></div>
+    </div>
+    <a class="card" href="docs/05-applications/README.md" style="margin-bottom:14px"><span class="id">DOC-090</span><div class="ti">📘 الگوی ساخت اپلیکیشن + ماتریس ماژول‌ها</div><div class="de">چگونه یک کاربرد بسازیم + Contractهای مشترک + ماتریس ماژول‌ها در ۸ کاربرد</div></a>
+    <div class="grid">
+      <a class="card app-card" href="docs/05-applications/blog.md"><div class="app-ico">✍️</div><div><span class="id">DOC-091</span><div class="ti">وبلاگ</div><div class="de">پایه — HMVC</div></div></a>
+      <a class="card app-card" href="docs/05-applications/news-portal.md"><div class="app-ico">📰</div><div><span class="id">DOC-092</span><div class="ti">پرتال خبری</div><div class="de">پایه→متوسط</div></div></a>
+      <a class="card app-card" href="docs/05-applications/shop.md"><div class="app-ico">🛒</div><div><span class="id">DOC-093</span><div class="ti">فروشگاه</div><div class="de">متوسط→حرفه‌ای</div></div></a>
+      <a class="card app-card" href="docs/05-applications/forum.md"><div class="app-ico">💬</div><div><span class="id">DOC-094</span><div class="ti">فروم / انجمن</div><div class="de">متوسط</div></div></a>
+      <a class="card app-card" href="docs/05-applications/lms.md"><div class="app-ico">🎓</div><div><span class="id">DOC-095</span><div class="ti">LMS آموزش</div><div class="de">حرفه‌ای</div></div></a>
+      <a class="card app-card" href="docs/05-applications/crm.md"><div class="app-ico">🤝</div><div><span class="id">DOC-096</span><div class="ti">CRM</div><div class="de">حرفه‌ای</div></div></a>
+      <a class="card app-card" href="docs/05-applications/erp.md"><div class="app-ico">🏭</div><div><span class="id">DOC-097</span><div class="ti">ERP</div><div class="de">سازمانی</div></div></a>
+      <a class="card app-card" href="docs/05-applications/bpms.md"><div class="app-ico">🔄</div><div><span class="id">DOC-098</span><div class="ti">BPMS</div><div class="de">سازمانی</div></div></a>
+    </div>
+  </section>
+
+  <!-- ROLES -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">🔐</div>
+      <div><h2>۰۶ — نقش‌ها و سطوح دسترسی</h2><div class="sub">RBAC/ABAC، وظایف، گردش‌کار تصویب</div></div>
+    </div>
+    <div class="grid">
+      <a class="card" href="docs/06-roles-access/roles-matrix.md"><span class="id">DOC-100 🔒</span><div class="ti">ماتریس نقش‌ها</div><div class="de">نقش‌های سیستمی/کسب‌وکار + ماتریس دسترسی + سطوح داده + RACI</div></a>
+      <a class="card" href="docs/06-roles-access/permission-catalog.md"><span class="id">DOC-101 🔒 🧠</span><div class="ti">کاتالوگ مجوزها</div><div class="de">~۲۵۰ مجوز با کلید استاندارد + بلوک machine-readable</div></a>
+      <a class="card" href="docs/06-roles-access/duties-workflow.md"><span class="id">DOC-102</span><div class="ti">وظایف و گردش‌کار</div><div class="de">Duties، تصویب سلسله‌مراتبی، تفویض، SLA، RACI</div></a>
+    </div>
+  </section>
+
+  <!-- QUALITY -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">✅</div>
+      <div><h2>۰۷ — کیفیت</h2><div class="sub">تست، تحلیل ایستا، بنچمارک، تعریف انجام‌شده</div></div>
+    </div>
+    <div class="grid">
+      <a class="card" href="docs/07-quality/testing-strategy.md"><span class="id">DOC-110 🔒</span><div class="ti">استراتژی تست</div><div class="de">هرم تست، Fakeها، Property-Based، Coverage، Mutation</div></a>
+      <a class="card" href="docs/07-quality/static-analysis-ci.md"><span class="id">DOC-111 🔒</span><div class="ti">تحلیل ایستا و CI/CD</div><div class="de">PHPStan max، CS-Fixer، Gateها، اسکریپت‌ها</div></a>
+      <a class="card" href="docs/07-quality/benchmark-targets.md"><span class="id">DOC-112 🧪</span><div class="ti">اهداف بنچمارک</div><div class="de">اهداف عددی هر موتور + Regression detection</div></a>
+      <a class="card" href="docs/07-quality/definition-of-done.md"><span class="id">DOC-113 🔒</span><div class="ti">تعریف انجام‌شده</div><div class="de">چک‌لیست Merge + موارد رد فوری</div></a>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">🗺️</div>
+      <div><h2>۰۸ — نقشهٔ راه</h2><div class="sub">۹ فاز ساخت + بک‌لاگ آمادهٔ ایجنت</div></div>
+    </div>
+    <div class="grid" style="margin-bottom:20px">
+      <a class="card" href="docs/08-roadmap/milestones.md"><span class="id">DOC-120</span><div class="ti">فازها و نقاط عطف</div><div class="de">M0–M9 با خروجی، معیار پذیرش، ریسک‌ها</div></a>
+      <a class="card" href="docs/08-roadmap/agent-backlog.md"><span class="id">DOC-121 🧠</span><div class="ti">بک‌لاگ ایجنت</div><div class="de">۶۳ تیکت machine-readable با وابستگی و معیار پذیرش</div></a>
+    </div>
+    <div class="road">
+      <div class="phase"><div class="ph-n">M1</div><div class="ph-b"><h3>هستهٔ صفر‌وابستگی</h3><p>Autoloader، Container، Config، Event، Pipeline، Error، Log، Compat، Optimizer، Module</p><div class="ph-tags"><span class="tg">container</span><span class="tg">config</span><span class="tg">event</span><span class="tg">+8</span></div></div></div>
+      <div class="phase"><div class="ph-n">M2</div><div class="ph-b"><h3>وب</h3><p>HTTP، Router، Session، Cookie، View، i18n، Jalali، CORS</p><div class="ph-tags"><span class="tg">http</span><span class="tg">router</span><span class="tg">view</span><span class="tg">jalali</span><span class="tg">+4</span></div></div></div>
+      <div class="phase"><div class="ph-n">M3</div><div class="ph-b"><h3>داده</h3><p>Database، Schema، Migration، ORM، Pagination، Validation</p><div class="ph-tags"><span class="tg">database</span><span class="tg">orm</span><span class="tg">validation</span><span class="tg">+3</span></div></div></div>
+      <div class="phase"><div class="ph-n">M4</div><div class="ph-b"><h3>امنیت و هویت</h3><p>Crypt، Hash، Auth، RBAC، Security، Cache، Audit</p><div class="ph-tags"><span class="tg">auth</span><span class="tg">rbac</span><span class="tg">security</span><span class="tg">+4</span></div></div></div>
+      <div class="phase"><div class="ph-n">M5</div><div class="ph-b"><h3>ارتباطی و زیرساخت</h3><p>Queue، Schedule، Console، Filesystem، Media، Mail، Notification، HttpClient، Backup</p><div class="ph-tags"><span class="tg">queue</span><span class="tg">mail</span><span class="tg">media</span><span class="tg">+6</span></div></div></div>
+      <div class="phase"><div class="ph-n">M6</div><div class="ph-b"><h3>سرویس‌ها</h3><p>API، Observability، Search، Tenancy، FeatureFlag، Realtime</p><div class="ph-tags"><span class="tg">api</span><span class="tg">search</span><span class="tg">observability</span><span class="tg">+3</span></div></div></div>
+      <div class="phase"><div class="ph-n">M7</div><div class="ph-b"><h3>دامنه</h3><p>Workflow (BPM)، Report (xlsx خودنوشته)، Payment (درگاه‌های ایرانی)</p><div class="ph-tags"><span class="tg">workflow</span><span class="tg">report</span><span class="tg">payment</span></div></div></div>
+      <div class="phase"><div class="ph-n">M8</div><div class="ph-b"><h3>ابزار</h3><p>Scaffold، Admin، Plugin، Test Framework، Upgrade</p><div class="ph-tags"><span class="tg">scaffold</span><span class="tg">admin</span><span class="tg">test</span><span class="tg">+2</span></div></div></div>
+      <div class="phase"><div class="ph-n">M9</div><div class="ph-b"><h3>اپلیکیشن‌ها و انتشار 1.0</h3><p>۸ کیت: Blog، News، Shop، Forum، LMS، CRM، ERP، BPMS</p><div class="ph-tags"><span class="tg">8 kits</span><span class="tg">Release 1.0</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- REFERENCES + ADR + TEMPLATES -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">📚</div>
+      <div><h2>۰۹ — مراجع، ADR و قالب‌ها</h2><div class="sub">پژوهش، تصمیم‌های معماری، قالب‌های ساخت</div></div>
+    </div>
+    <div class="grid">
+      <a class="card" href="docs/09-references/benchmarks.md"><span class="id">DOC-130</span><div class="ti">مراجع و بنچمارک‌ها</div><div class="de">Laravel/Symfony/Odoo/Drupal/Camunda + RFCها + درس‌ها</div></a>
+      <a class="card" href="docs/09-references/glossary.md"><span class="id">DOC-131</span><div class="ti">واژه‌نامه</div><div class="de">فارسی↔لاتین برای معماری/داده/امنیت/بومی</div></a>
+      <a class="card" href="docs/templates/engine-spec-template.md"><span class="id">DOC-150</span><div class="ti">قالب مستند موتور</div><div class="de">۱۷ بخش اجباری برای هر موتور</div></a>
+      <a class="card" href="docs/templates/module-template.md"><span class="id">DOC-151</span><div class="ti">قالب ماژول</div><div class="de">ساختار + manifest + الگوی کد هر لایه</div></a>
+      <a class="card" href="docs/templates/adr-template.md"><span class="id">DOC-152</span><div class="ti">قالب ADR + فهرست ۱۶ تصمیم</div><div class="de">تصمیم‌های معماری پذیرفته‌شده</div></a>
+      <a class="card" href="docs/adr/README.md" style="border-color:var(--acc)"><span class="id">DOC-140 📑</span><div class="ti">شاخص تصمیم‌های معماری (ADR)</div><div class="de">۱۶ تصمیم + دسته‌بندی موضوعی + نمودار وابستگی</div></a>
+      <a class="card" href="docs/adr/ADR-0001-combined-architecture.md"><span class="id">ADR-0001</span><div class="ti">معماری ترکیبی</div><div class="de">HMVC + Modular + ED + Hexagonal</div></a>
+      <a class="card" href="docs/adr/ADR-0004-zero-dependency.md"><span class="id">ADR-0004</span><div class="ti">صفر وابستگی</div><div class="de">حذف کامل Composer از هسته</div></a>
+      <a class="card" href="docs/README.md"><span class="id">DOC-000</span><div class="ti">📇 شاخص کامل مستندات</div><div class="de">جدول همهٔ اسناد + مسیرهای مطالعه</div></a>
+    </div>
+  </section>
+
+  <!-- MACHINE-READABLE -->
+  <section>
+    <div class="sec-h">
+      <div class="ico">🤖</div>
+      <div><h2>۱۰ — منابع ماشین‌خوان (برای ایجنت‌ها)</h2><div class="sub">فهرست برنامه‌ای + JSON Schemaهای اعتبارسنجی</div></div>
+    </div>
+    <div class="grid">
+      <a class="card" href="docs/manifest.json" style="border-color:var(--acc2)"><span class="id">JSON 🧠</span><div class="ti">manifest.json — فهرست کل</div><div class="de">۱۲۱ سند + ۵۳ موتور با DOC-ID، مسیر، hash و مسیرهای مطالعه</div></a>
+      <a class="card" href="docs/schemas/module.v1.json"><span class="id">Schema</span><div class="ti">module.v1.json</div><div class="de">اعتبارسنجی <span class="kbd">module.json</span> هر ماژول</div></a>
+      <a class="card" href="docs/schemas/project.v1.json"><span class="id">Schema</span><div class="ti">project.v1.json</div><div class="de">اعتبارسنجی <span class="kbd">tavaan.json</span> ریشهٔ پروژه</div></a>
+      <a class="card" href="docs/schemas/integration-event.v1.json"><span class="id">Schema</span><div class="ti">integration-event.v1.json</div><div class="de">قرارداد رویداد بین‌سرویسی + Envelope</div></a>
+      <a class="card" href="docs/schemas/docs-manifest.v1.json"><span class="id">Schema</span><div class="ti">docs-manifest.v1.json</div><div class="de">اعتبارسنجی خودِ manifest</div></a>
+      <div class="card" style="cursor:default"><span class="id">Tooling</span><div class="ti">tools/scripts/</div><div class="de"><span class="kbd">build-manifest.py</span> • <span class="kbd">verify-docs.py</span> • <span class="kbd">scaffold-structure.sh</span></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div style="font-size:1.1rem;margin-bottom:6px">🌟 <b>تَوان | Tavaan</b> — صفر وابستگی، بی‌نهایت امکان</div>
+    <div>مجموعهٔ مستندات تحلیلی جزء‌به‌جزء • ۱۲۱ سند • ~۱۴۱٬۰۰۰ کلمه • آماده برای اجرا توسط ایجنت‌های هوش مصنوعی</div>
+    <div style="margin-top:10px;color:var(--line)">بررسی سلامت: <span class="kbd">python3 tools/scripts/verify-docs.py</span></div>
+  </footer>
+
+</div>
+</body>
+</html>
